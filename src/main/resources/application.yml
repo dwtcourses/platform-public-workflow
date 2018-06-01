@@ -1,0 +1,70 @@
+endpoints:
+  enabled: false
+  health:
+    enabled: true
+
+
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_URL}
+  public-client: false
+  realm: ${KEYCLOAK_REALM}
+  resource: ${KEYCLOAK_CLIENT_ID}
+  bearer-only: true
+  ssl-required: external
+  use-resource-role-mappings: true
+  principal-attribute: preferred_username
+  enable-basic-auth: true
+  credentials:
+    secret: ${KEYCLOAK_AUTH_SECRET}
+
+
+gov:
+  notify:
+    api:
+      key: ${GOV_NOTIFY_CLIENT_ID}
+      notification:
+        emailTemplateId: ${GOV_NOTIFY_NOTIFICATION_EMAIL_TEMPLATE_ID}
+        smsTemplateId:  ${GOV_NOTIFY_NOTIFICATION_SMS_TEMPLATE_ID}
+
+camunda:
+  bpm:
+    deployment-resource-pattern:
+        - classpath*:**/*.bpmn
+        - classpath*:**/*.bpmn20.xml
+        - classpath*:**/*.dmn
+        - classpath*:**/*.dmn11.xml
+        - classpath*:**/*.cmmn
+        - classpath*:**/*.cmmn10.xml
+        - classpath*:**/*.cmmn11.xml
+        - file:///workflow-resources/bpmn/**/*.bpmn
+        - file:///workflow-resources/cmmn/**/*.cmmn
+        - file:///workflow-resources/dmn/**/*.dmn
+
+
+---
+
+spring:
+  profiles: local,test
+
+camunda:
+  bpm:
+    process-engine-name: borders
+    database:
+      type: h2
+
+---
+
+spring:
+  profiles: dev,prod
+  datasource:
+    url: ${ENGINE_DB_URL}
+    username: ${ENGINE_DB_USERNAME}
+    password: ${ENGINE_BD_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+camunda:
+  bpm:
+    process-engine-name: borders
+    database:
+      type: postgres
+
