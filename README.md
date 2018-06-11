@@ -1,24 +1,32 @@
-# Public Platform Workflow UI
+# Public Platform Workflow Engine
+
+Central workflow engine
 
 
-## Running
+Functional packaging constructs
 
-Running locally in dev mode with hot updates:
+#### REST API Controllers
 
-```
-npm run dev
-```    
+Interface that is exposed over HTTP and define the resources for the engine
 
-Running in prod mode:
+#### Application Service Code
 
-```
-npm run build
-cd dist/
-node server.js
-```
+Internal application code that uses the native Camunda API and does filtering
+based on the user who is currently logged in and their team details.
 
-URL:
+Only certain Camunda REST APIs
 
-```
-http://localhost:8080
-```
+#### Core Resources
+1. Tasks
+2. Process Definitions
+3. Notifications
+4. Shift
+5. Process Instances
+
+
+See swagger docs:
+
+{env}://swagger-ui.html
+
+If this service is talking to internal services then ensure you have added the internal CA certs as seperate certificate files 
+to /ca/xxx.crt. These will be loaded as part of the boot procedure into the java keystore and trusted.
