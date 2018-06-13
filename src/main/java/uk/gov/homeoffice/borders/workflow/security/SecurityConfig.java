@@ -31,10 +31,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-//@Configuration
-//@EnableWebSecurity
-//@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
-//@Profile("!test")
+@Configuration
+@EnableWebSecurity
+@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
+@Profile("!test")
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
